@@ -49,6 +49,12 @@ void setup()
   // waveform generation.  e.g.  DCC::begin(STANDARD_MOTOR_SHIELD,2); to use timer 2
 
   DCC::begin(MOTOR_SHIELD_TYPE); 
+
+#ifdef USE_SERVO_TURNOUTS
+  ServoTurnouts::Setup();
+#endif
+
+
   LCD(1,F("Ready")); 
 }
 

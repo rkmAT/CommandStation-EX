@@ -4,6 +4,7 @@
 #ifndef DCCEX_h
 #define DCCEX_h
 
+#include "ServoTurnouts.h"
 #include "defines.h"
 #include "DCC.h"
 #include "DIAG.h"

@@ -19,6 +19,13 @@
 #ifndef Turnouts_h
 #define Turnouts_h
 
+#define EESTOREDEBUG
+
+#if __has_include ("config_ServoTurnouts.h")
+  #define USE_SERVO_TURNOUTS
+#endif
+
+
 #include <Arduino.h>
 #include "DCC.h"
 
@@ -29,8 +36,8 @@ const byte STATUS_PWMPIN=0x3F; // PWM  pin 0-63
 struct TurnoutData {
    int id;
    uint8_t tStatus; // has STATUS_ACTIVE, STATUS_PWM, STATUS_PWMPIN  
-   union {uint8_t subAddress; char moveAngle;}; //DCC  sub addrerss or PWM difference from inactiveAngle  
-   union {int address; int inactiveAngle;}; // DCC address or PWM servo angle 
+   union {uint8_t subAddress; char moveAngle; char activePulseWidth;}; //DCC  sub addrerss or PWM difference from inactiveAngle or PWM activePulseWidth
+   union {int address; int inactiveAngle; int inactivePulseWidth;}; // DCC address or PWM servo angle or PWM inactivePulseWidth
 };
 
 class Turnout {
