@@ -72,6 +72,7 @@ public:
   static void setFunction(int cab, byte fByte, byte eByte);
   static void setFn(int cab, byte functionNumber, bool on);
   static int changeFn(int cab, byte functionNumber, bool pressed);
+  static int  getFn(int cab, byte functionNumber);
   static void updateGroupflags(byte &flags, int functionNumber);
   static void setAccessory(int aAdd, byte aNum, bool activate);
   static bool writeTextPacket(byte *b, int nBytes);
@@ -154,10 +155,6 @@ private:
 #define ARDUINO_TYPE "NANO"
 #elif defined(ARDUINO_AVR_MEGA2560)
 #define ARDUINO_TYPE "MEGA"
-#elif defined(ARDUINO_ARCH_MEGAAVR)
-#define ARDUINO_TYPE "UNOWIFIR2"
-#elif defined(ARDUINO_SAMD_ZERO)
-  #define ARDUINO_TYPE    "FireBoxMK1"
 #else
 #error CANNOT COMPILE - DCC++ EX ONLY WORKS WITH AN ARDUINO UNO, NANO 328, OR ARDUINO MEGA 1280/2560
 #endif
