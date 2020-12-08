@@ -54,7 +54,7 @@ void setup()
 
   DCC::begin(MOTOR_SHIELD_TYPE); 
 
-#ifdef USE_SERVO_TURNOUTS
+#if __has_include ("config_ServoTurnouts.h")  
   ServoTurnouts::Setup();
 #endif
 

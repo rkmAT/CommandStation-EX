@@ -42,8 +42,8 @@ The configuration file for servo turnouts connected via PCA9685 board directly t
 //
 */
 
-#define TURNOUTS _T_(5, 0,- 10, 10); \
-                 _T_(6, 1, -15, 15); 
+#define TURNOUTS _T_(1000, 0, -10, 10); \
+                 _T_(1001, 1, -15, 15); 
 
 
 

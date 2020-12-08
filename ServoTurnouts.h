@@ -18,7 +18,7 @@
 #define SERVO_TURNOUTS
 #include "Turnouts.h"
 
-#ifdef USE_SERVO_TURNOUTS
+#if __has_include ("config_ServoTurnouts.h")
   #include "config_ServoTurnouts.h"
 
   #define _T_ Turnout::create

@@ -22,6 +22,7 @@
 #include "EEStore.h"
 #include "PWMServoData.h"
 #include "PWMServoDriver.h"
+#include "config.h"
 #ifdef EESTOREDEBUG
 #include "DIAG.h"
 #endif
@@ -54,7 +55,7 @@ void Turnout::activate(bool state) {
   else
     data.tStatus &= ~STATUS_ACTIVE;
   if (data.tStatus & STATUS_PWM){
-    #ifdef USE_SERVO_TURNOUTS
+    #ifdef USE_PCA9685_SERVO_TURNOUTS
       PWMServoDriver::setServo(data.tStatus & STATUS_PWMPIN, (state ? data.activePulseWidth + (TURNOUT_NEUTRAL_POSITION_PULSE_WIDTH / PCA9685_TIME_FACTOR) : data.inactivePulseWidth + (TURNOUT_NEUTRAL_POSITION_PULSE_WIDTH / PCA9685_TIME_FACTOR)));
     #else
       PWMServoDriver::setServo(data.tStatus & STATUS_PWMPIN, (data.inactiveAngle+(state?data.moveAngle:0)));
@@ -98,7 +99,7 @@ void Turnout::load(){
 
   for(int i=0;i<EEStore::eeStore->data.nTurnouts;i++){
     EEPROM.get(EEStore::pointer(),data);
-    #ifdef USE_SERVO_TURNOUTS
+    #ifdef USE_PCA9685_SERVO_TURNOUTS
       if (data.tStatus & STATUS_PWM) tt=create(data.id,data.tStatus & STATUS_PWMPIN, data.inactivePulseWidth, data.activePulseWidth);
     #else
       if (data.tStatus & STATUS_PWM) tt=create(data.id,data.tStatus & STATUS_PWMPIN, data.inactiveAngle,data.moveAngle);
@@ -144,7 +145,7 @@ Turnout *Turnout::create(int id, int add, int subAdd){
 Turnout *Turnout::create(int id, byte pin, int activeAngle, int inactiveAngle){
   Turnout *tt=create(id);
   tt->data.tStatus= STATUS_PWM | (pin &  STATUS_PWMPIN);
-  #ifdef USE_SERVO_TURNOUTS
+  #ifdef USE_PCA9685_SERVO_TURNOUTS
     tt->data.inactivePulseWidth = ((map(inactiveAngle > 45 ? 45 : inactiveAngle < -45 ? -45 : inactiveAngle, 0, 180, 0, TURNOUT_SERVO_PULSE_WIDTH_RANGE)) / PCA9685_TIME_FACTOR);
     tt->data.activePulseWidth = ((map(activeAngle > 45 ? 45 : activeAngle < -45 ? -45 : activeAngle, 0, 180, 0, TURNOUT_SERVO_PULSE_WIDTH_RANGE)) / PCA9685_TIME_FACTOR);
   #else   // old code shouldn't be used before but to be save
@@ -173,7 +174,7 @@ Turnout *Turnout::create(int id){
 #ifdef EESTOREDEBUG
 void Turnout::print(Turnout *tt) {
     if (tt->data.tStatus & STATUS_PWM )
-      #ifdef USE_SERVO_TURNOUTS   
+      #ifdef USE_PCA9685_SERVO_TURNOUTS   
         DIAG(F("Turnout %d inactivePulseWidth %d activePulseWidth %d Status %d\n"),tt->data.id, tt->data.inactivePulseWidth, tt->data.activePulseWidth,tt->data.tStatus );//& STATUS_ACTIVE);
       #else
         DIAG(F("Turnout %d ZeroAngle %d MoveAngle %d Status %d\n"),tt->data.id, tt->data.inactiveAngle, tt->data.moveAngle,tt->data.tStatus & STATUS_ACTIVE);

@@ -21,8 +21,9 @@
 
 #define EESTOREDEBUG
 
-#if __has_include ("config_ServoTurnouts.h")
-  #define USE_SERVO_TURNOUTS
+// if we find a config_ServoTurnouts.h file we define USE_PCA9685_SERVO_TURNOUTS automatically
+#if __has_include ("config_ServoTurnouts.h")  
+  #define USE_PCA9685_SERVO_TURNOUTS
 #endif
 
 

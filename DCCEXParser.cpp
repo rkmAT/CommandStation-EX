@@ -621,6 +621,12 @@ bool DCCEXParser::parseT(Print *stream, int params, int p[])
         StringFormatter::send(stream, F("<O>"));
         return true;
 
+    case 4: // <T id addr active_angle inactive_angle>  define pca9685 servo turnout
+        if (!Turnout::create(p[0], p[1], p[2], p[3]))
+            return false;
+        StringFormatter::send(stream, F("<O>"));
+        return true;
+
     default:
         return false; // will <x>
     }
