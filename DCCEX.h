@@ -11,7 +11,9 @@
 #include "DCCEXParser.h"
 #include "version.h"
 #include "WifiInterface.h"
+#if ETHERNET_ON == true
 #include "EthernetInterface.h"
+#endif
 #include "LCD_Implementation.h"
 #include "freeMemory.h"
 #include <Arduino.h>
